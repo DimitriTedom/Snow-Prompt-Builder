@@ -43,13 +43,13 @@ export const PATCH = async (req,{params}) =>{
 
 //to delete controller
 
-export const DELETE = async (req,{params}) =>{
+export const DELETE = async (req,context) =>{
+    const {params} = context;
     try {
         await connectToDB();
         await Prompt.findByIdAndDelete(params.id);
         return new Response("Prompt deleted succesfully",{status:200})
     } catch (error) {
         return new Response("Failed to delete Prompt",{status:500});
-        
     }
 }

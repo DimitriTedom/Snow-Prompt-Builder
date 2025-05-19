@@ -1,5 +1,14 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+## To be implemented
+
+[]Implement search
+    -search by tag
+    -seacrh by prompt
+    -search by username
+[] Implement click on tag
+[] Implement View other profiles
+
 ## Getting Started
 
 First, run the development server:
