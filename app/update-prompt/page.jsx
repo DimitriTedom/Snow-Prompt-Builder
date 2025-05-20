@@ -2,7 +2,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useEffect } from "react";
 import Form from "@components/Form";
-import { useLoading } from "@app/LoadingContext";
+import { useLoading } from "@components/LoadingContext";
 
 const UpdatePrompt = () => {
   const router = useRouter();

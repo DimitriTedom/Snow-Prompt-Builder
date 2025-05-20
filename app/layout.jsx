@@ -2,8 +2,8 @@ import "../styles/globals.css";
 import Provider from "@components/Provider";
 import Nav from "@components/Nav";
 import StyledComponentsRegistry from "./registry";
-import { LoadingProvider } from "./LoadingContext";
-
+import { LoadingProvider } from "@components/LoadingContext";
+import Footer from "@components/Footer";
 export const metadata = {
   title: "Snow Promt Builder",
   description: "Discover & Share AI Prompts",
@@ -22,6 +22,7 @@ const RootLayout = ({ children }) => (
             <main className="app">
               <Nav />
               {children}
+              <Footer />
             </main>
           </Provider>
         </LoadingProvider>

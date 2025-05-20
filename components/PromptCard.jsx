@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
-const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
+const PromptCard = ({ post, handleClick, handleEdit, handleDelete }) => {
   const [copied, setCopied] = useState("");
   const pathName = usePathname();
   const { data: session } = useSession();
@@ -16,7 +16,10 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
   };
 
   return (
-    <div className="bg-gradient-to-br from-[#1f1f1f] to-[#0d0d0d] border border-[#2d2d2d] rounded-2xl p-5 w-full max-w-md text-white shadow-lg backdrop-blur-sm transition-all hover:shadow-indigo-500/30 h-fit flex-1 break-inside-avoid">
+    <div
+      className="bg-gradient-to-br from-[#1f1f1f] to-[#0d0d0d] border border-[#2d2d2d] rounded-2xl p-5 w-full max-w-md text-white shadow-lg backdrop-blur-sm transition-all hover:shadow-indigo-500/30 h-fit flex-1 break-inside-avoid hover:cursor-pointer"
+      onClick={() => handleClick && handleClick(post.creator._id)}
+    >
       <div className="flex justify-between items-start gap-4">
         <div className="flex items-center gap-3">
           <Image
@@ -27,17 +30,20 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
             className="rounded-full border border-indigo-500"
           />
           <div className="flex flex-col">
-            <h3 className="font-semibold text-indigo-400">{post.creator.username}</h3>
+            <h3 className="font-semibold text-indigo-400">
+              {post.creator.username}
+            </h3>
             <p className="text-xs text-gray-400">{post.creator.email}</p>
           </div>
         </div>
 
-        <button
-          onClick={handleCopy}
-          className="rounded-lg w-7 h-7"
-        >
+        <button onClick={handleCopy} className="rounded-lg w-7 h-7">
           <Image
-            src={copied === post.prompt ? "/assets/icons/tick.svg" : "/assets/icons/copy.svg"}
+            src={
+              copied === post.prompt
+                ? "/assets/icons/tick.svg"
+                : "/assets/icons/copy.svg"
+            }
             width={40}
             height={40}
             alt="copy_icon"
@@ -47,10 +53,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
 
       <p className="my-4 text-sm text-gray-200">{post.prompt}</p>
 
-      <p
-        className="text-sm text-blue-400 hover:underline cursor-pointer"
-        onClick={() => handleTagClick && handleTagClick(post.tag)}
-      >
+      <p className="text-sm text-blue-400 hover:underline cursor-pointer">
         #{post.tag}
       </p>
 
