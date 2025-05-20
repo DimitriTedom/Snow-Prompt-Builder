@@ -10,7 +10,8 @@ export const metadata = {
     default: "Snow Prompt Builder",
     template: "%s | Snow Prompt Builder",
   },
-  description: "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
+  description:
+    "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
   keywords: [
     "AI prompts",
     "prompt sharing",
@@ -19,18 +20,19 @@ export const metadata = {
     "Next.js",
     "NextAuth",
     "MongoDB",
-    "Snow Prompt Builder"
+    "Snow Prompt Builder",
   ],
   authors: [{ name: "Dimitri Tedom", url: "https://github.com/DimitriTedom" }],
-  metadataBase: new URL("https://your-domain.com"),
+  metadataBase: new URL("https://snow-prompt-builder.vercel.app/"),
   openGraph: {
     title: "Snow Prompt Builder",
-    description: "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
-    url: "https://your-domain.com",
+    description:
+      "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
+    url: "https://snow-prompt-builder.vercel.app/",
     siteName: "Snow Prompt Builder",
     images: [
       {
-        url: "https://your-domain.com/og-image.png",
+        url: "https://snow-prompt-builder.vercel.app/og-image.png",
         width: 1200,
         height: 630,
         alt: "Snow Prompt Builder Preview",
@@ -44,8 +46,9 @@ export const metadata = {
     site: "@DimitriTedom",
     creator: "@DimitriTedom",
     title: "Snow Prompt Builder",
-    description: "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
-    images: ["https://your-domain.com/og-image.png"],
+    description:
+      "Discover, generate, and share AI‑powered prompts with community‑suggested tags.",
+    images: ["https://snow-prompt-builder.vercel.app/og-image.png"],
   },
   robots: {
     index: true,
@@ -62,7 +65,6 @@ export const metadata = {
     apple: "/og-image.png",
   },
 };
-
 
 const RootLayout = ({ children }) => (
   <StyledComponentsRegistry>
