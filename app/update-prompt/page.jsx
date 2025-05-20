@@ -1,6 +1,6 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import Form from "@components/Form";
 import { useLoading } from "@components/LoadingContext";
 
@@ -59,5 +59,13 @@ const UpdatePrompt = () => {
   );
 };
 
-//To implement, search, click on tag, view other profiles
-export default UpdatePrompt;
+// Exporting the UpdatePrompt function through this enables fix 'Missing Suspense boundary with useSearchParams ' error
+const Final = () => {
+  return (
+    <Suspense>
+      <UpdatePrompt />
+    </Suspense>
+  );
+};
+
+export default Final;
