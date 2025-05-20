@@ -1,45 +1,153 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Snow Prompt Builder
 
-## To be implemented
+An open‑source AI prompting tool to discover, create and share creative prompts. Snow Prompt Builder leverages Next.js, NextAuth, MongoDB and the Groq LLM API (llama-3.3-70b-versatile) to let users auto‑generate and save AI prompts with tags.
 
-[]Implement search
-    -search by tag
-    -seacrh by prompt
-    -search by username
-[] Implement click on tag
-[] Implement View other profiles
+<p align="center">
+  <img src="./public/assets/images/preview.png" alt="Snow Prompt Builder preview" />
+</p>
 
-## Getting Started
+---
 
-First, run the development server:
+## 🛠️ Features
+
+- **User Authentication** via NextAuth (Google)
+- **Generate Prompts** by describing what you want—AI returns a fully‑crafted prompt + suggested tags
+- **Create & Save** prompts to your personal profile
+- **Browse & Search** community‑shared prompts
+- **Responsive**, dark‑mode‑inspired UI built with Tailwind CSS
+
+---
+
+## 🚀 Getting Started
+
+### 1. Clone the repo
 
 ```bash
+git clone https://github.com/DimitriTedom/Snow-Prompt-Builder.git
+cd Snow-Prompt-Builder
+````
+
+### 2. Install dependencies
+
+Use your favorite package manager:
+
+```bash
+# npm
+npm install
+
+# Yarn
+yarn install
+
+# pnpm
+pnpm install
+
+# bun
+bun install
+```
+
+### 3. Set up your environment
+
+Create a `.env.local` file in the project root and populate it with:
+
+```dotenv
+# NextAuth (Google OAuth)
+GOOGLE_ID=
+GOOGLE_CLIENT_SECRET=
+
+# MongoDB (Atlas)
+MONGODB_URL=
+
+# NextAuth secret & URLs
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+NEXTAUTH_URL_INTERNAL=
+
+# Groq LLM API Key
+GROQ_API_KEY=
+```
+
+> **⚠️ Security:** Never commit your `.env.local` to source control.
+
+### 4. Run in development
+
+```bash
+# npm
 npm run dev
-# or
+
+# Yarn
 yarn dev
-# or
+
+# pnpm
 pnpm dev
-# or
+
+# bun
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 5. Build & Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+# npm
+npm run build
+npm start
 
-## Learn More
+# Yarn
+yarn build
+yarn start
 
-To learn more about Next.js, take a look at the following resources:
+# pnpm
+pnpm build
+pnpm start
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# bun
+bun build
+bun start
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 📁 Project Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+```
+.
+├── app/                   # Next.js App Router pages & layouts
+│   ├── api/               # API routes (Groq integration, prompt CRUD)
+│   └── layout.jsx         # Root layout (Providers, nav, footer)
+├── components/            # Reusable React components
+│   ├── Form.jsx
+│   ├── Footer.jsx
+│   ├── Nav.jsx
+│   └── PromptCard.jsx
+├── context/               # Loading & UI context providers
+├── lib/                   # Database adapters, helpers
+├── public/                # Static assets (logo, icons)
+├── styles/                # Global CSS & Tailwind config
+└── package.json
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+
+## 🤝 Contributing
+
+1. Fork the repo
+2. Create a feature branch (`git checkout -b feat/YourFeature`)
+3. Commit your changes (`git commit -m 'feat: add your feature'`)
+4. Push to your branch (`git push origin feat/YourFeature`)
+5. Open a Pull Request
+
+Please follow the [conventional commits](https://www.conventionalcommits.org/) style.
+
+---
+
+## 📜 License
+
+This project is open source under the [MIT License](./LICENSE).
+
+---
+
+> Built with ❤️ by Dimitri Tedom
+
+
+Feel free to adapt or extend this README to match your team’s workflow and add any additional sections (e.g., testing, CI/CD) as needed.

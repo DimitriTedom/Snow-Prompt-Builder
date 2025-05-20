@@ -64,7 +64,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <p className="text-gray-500 text-sm">
-          © {new Date().getFullYear()} SnowDev. All rights reserved.
+          © {new Date().getFullYear()} designed,coded & Deployed by <Link href={"https://snow-dev-portfolio-mu.vercel.app/"} target="_blank">@SnowDev</Link> with ❤️. All rights reserved.
         </p>
       </div>
     </footer>

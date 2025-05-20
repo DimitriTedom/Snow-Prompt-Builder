@@ -10,11 +10,11 @@ export const metadata = {
 };
 
 const RootLayout = ({ children }) => (
-  <html lang="en">
-    <body>
-      <StyledComponentsRegistry>
-        <LoadingProvider>
-          <Provider>
+  <StyledComponentsRegistry>
+    <LoadingProvider>
+      <Provider>
+        <html lang="en">
+          <body>
             <div className="main">
               <div className="gradient" />
             </div>
@@ -24,11 +24,11 @@ const RootLayout = ({ children }) => (
               {children}
               <Footer />
             </main>
-          </Provider>
-        </LoadingProvider>
-      </StyledComponentsRegistry>
-    </body>
-  </html>
+          </body>
+        </html>
+      </Provider>
+    </LoadingProvider>
+  </StyledComponentsRegistry>
 );
 
 export default RootLayout;

@@ -8,7 +8,7 @@ const Home = () => {
         <span className="gradient_text text-center">AI-Powered Prompts</span>
       </h1>
 
-      <p className="desc text-center">Snow Prompt Builder is an open-source AI prompting tool for modern world to discover,create and share creative prompts</p>
+      <p className="desc text-center">Snow Prompt Builder is an open-source AI prompting tool for modern world to discover,create and share creative prompts 😍️</p>
 
       <Feed/>
     </section>

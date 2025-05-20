@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 const Nav = () => {
-  const {data:session} = useSession();
+  const { data: session } = useSession();
   const [providers, setProviderss] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   useEffect(() => {
@@ -32,6 +32,9 @@ const Nav = () => {
       <div className="hidden sm:flex">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
+            <Link href={"/generate-prompt"} className="black_btn">
+              Generate Prompt
+            </Link>
             <Link href={"/create-prompt"} className="black_btn">
               Create Post
             </Link>

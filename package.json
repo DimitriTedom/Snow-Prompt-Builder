@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "bcrypt": "^6.0.0",
+    "groq-sdk": "^0.22.0",
     "mongodb": "^6.16.0",
     "mongoose": "^8.15.0",
     "next": "15.3.2",

@@ -17,7 +17,7 @@ const PromptCard = ({ post, handleClick, handleEdit, handleDelete }) => {
 
   return (
     <div
-      className="bg-gradient-to-br from-[#1f1f1f] to-[#0d0d0d] border border-[#2d2d2d] rounded-2xl p-5 w-full max-w-md text-white shadow-lg backdrop-blur-sm transition-all hover:shadow-indigo-500/30 h-fit flex-1 break-inside-avoid hover:cursor-pointer"
+      className="bg-gradient-to-br from-[#1f1f1f] to-[#0d0d0d] border border-[#2d2d2d] rounded-2xl p-5 w-full text-white shadow-lg backdrop-blur-sm transition-all hover:shadow-indigo-500/30 h-fit flex-1 break-inside-avoid hover:cursor-pointer"
       onClick={() => handleClick && handleClick(post.creator._id)}
     >
       <div className="flex justify-between items-start gap-4">

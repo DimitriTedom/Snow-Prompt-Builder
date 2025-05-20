@@ -73,20 +73,21 @@ const Feed = () => {
             }}
           />
           ): (
-
-          <PromptCardList
-            data={post}
-            handleClick={(id) => {
-              console.log(session?.user.id);
-              session?.user.id != id
-                ? router.push(`/profile/get?id=${id}`)
-                : router.push(`/profile`);
-            }}
-          />
+            <section className="w-full">
+              <PromptCardList
+                data={post}
+                handleClick={(id) => {
+                  console.log(session?.user.id);
+                  session?.user.id != id
+                    ? router.push(`/profile/get?id=${id}`)
+                    : router.push(`/profile`);
+                }}
+              />
+            </section>
           )}
         </>
       ) : (
-        <h1 className="head_text">Please sign-in first !</h1>
+        <h1 className="head_text text-center">Please sign-in first 🤓️!</h1>
       )}
     </section>
   );
