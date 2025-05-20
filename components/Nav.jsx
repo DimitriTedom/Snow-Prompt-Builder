@@ -90,7 +90,6 @@ const Nav = () => {
                 >
                   My Profile
                 </Link>
-
                 <Link
                   href={"/create-prompt"}
                   className="dropdown_link"
@@ -99,6 +98,9 @@ const Nav = () => {
                   Create Prompt
                 </Link>
 
+                <Link href={"/generate-prompt"} className="black_btn">
+                  Generate Prompt
+                </Link>
                 <button
                   type="button"
                   onClick={() => {
