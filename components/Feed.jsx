@@ -17,35 +17,46 @@ const PromptCardList = ({ data, handleClick }) => {
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
   const [post, setPost] = useState([]);
-  const [searchResults,setSearchResults] = useState([])
-  const [searchTimout,setSearchTimeout] = useState(null);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchTimout, setSearchTimeout] = useState(null);
   const { showLoading, hideLoading } = useLoading();
   const { data: session } = useSession();
   const router = useRouter();
 
-  const filterPosts = () =>{
-    const regex = new RegExp(searchText,"i") // regular expression instace with i flag(for case-insensitive search)
-    return post.filter((post)=> regex.test(post.creator.username) || regex.test(post.tag) || regex.test(post.prompt) || regex.test(post.creator.email))
-  }
+  const filterPosts = () => {
+    const regex = new RegExp(searchText, "i"); // regular expression instace with i flag(for case-insensitive search)
+    return post.filter(
+      (post) =>
+        regex.test(post.creator.username) ||
+        regex.test(post.tag) ||
+        regex.test(post.prompt) ||
+        regex.test(post.creator.email)
+    );
+  };
   const handleSearchChange = (e) => {
-    clearTimeout(searchTimout)
-    setSearchText(e.target.value)
-//this is my debounce method for search
+    clearTimeout(searchTimout);
+    setSearchText(e.target.value);
+    //this is my debounce method for search
     setSearchTimeout(
-      setTimeout(()=>{
+      setTimeout(() => {
         const searchResult = filterPosts(e.target.value);
         setSearchResults(searchResult);
-      },600)
-    )
+      }, 600)
+    );
   };
 
   useEffect(() => {
-    showLoading();
     const fetchPosts = async () => {
-      const response = await fetch("/api/prompt");
-      const data = await response.json();
-      setPost(data);
-      hideLoading();
+      showLoading();
+      try {
+        const response = await fetch("/api/prompt");
+        const data = await response.json();
+        setPost(data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        hideLoading();
+      }
     };
     fetchPosts();
   }, []);
@@ -65,14 +76,14 @@ const Feed = () => {
           </form>
           {searchText ? (
             <PromptCardList
-            data={searchResults}
-            handleClick={(id) => {
-              session?.user.id != id
-                ? router.push(`/profile/get?id=${id}`)
-                : router.push(`/profile`);
-            }}
-          />
-          ): (
+              data={searchResults}
+              handleClick={(id) => {
+                session?.user.id != id
+                  ? router.push(`/profile/get?id=${id}`)
+                  : router.push(`/profile`);
+              }}
+            />
+          ) : (
             <section className="w-full">
               <PromptCardList
                 data={post}
