@@ -1,6 +1,6 @@
 # Snow Prompt Builder
 
-An open‑source AI prompting tool to discover, create and share creative prompts. Snow Prompt Builder leverages Next.js, NextAuth, MongoDB and the Groq LLM API (llama-3.3-70b-versatile) to let users auto‑generate and save AI prompts with tags.
+An open‑source AI prompting tool to discover, create and share creative prompts. Snow Prompt Builder leverages Next.js, NextAuth, MongoDB and the Groq LLM API (llama-3.3-70b-versatile) to let users auto‑generate and save AI prompts with tags
 
 <p align="center">
   <img src="./public/assets/images/preview.png" alt="Snow Prompt Builder preview" />
