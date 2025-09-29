@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-import { connectToDB } from "@utils/database";
-import User from "@models/user";
+import { prisma } from "@/lib/prisma";
+
 const handler = NextAuth({
   providers: [
     GoogleProvider({
@@ -11,27 +11,44 @@ const handler = NextAuth({
   ],
   callbacks: {
     async session({ session }) {
-      const sessionUser = await User.findOne({ email: session.user.email });
-      session.user.id = sessionUser._id.toString();
-      return session;
+      try {
+        const sessionUser = await prisma.user.findUnique({ 
+          where: { email: session.user.email } 
+        });
+        if (sessionUser) {
+          session.user.id = sessionUser.id;
+        }
+        return session;
+      } catch (error) {
+        console.error("Error in session callback:", error);
+        return session;
+      }
     },
     async signIn({ profile }) {
       try {
-        await connectToDB();
+        await prisma.$connect();
+        
         //check if a user already exists
-        const userExists = await User.findOne({ email: profile.email });
+        const userExists = await prisma.user.findUnique({ 
+          where: { email: profile.email } 
+        });
+        
         //if not, create a new user
         if (!userExists) {
-          await User.create({
-            email: profile.email,
-            username: profile.name.replace(" ", "").toLowerCase(),
-            image: profile.picture,
+          await prisma.user.create({
+            data: {
+              email: profile.email,
+              username: profile.name.replace(/\s+/g, "").toLowerCase(),
+              image: profile.picture,
+            }
           });
         }
         return true;
       } catch (error) {
-        console.log("Error checking if user exists: ", error.message);
+        console.error("Error in signIn callback:", error.message);
         return false;
+      } finally {
+        await prisma.$disconnect();
       }
     },
   },
