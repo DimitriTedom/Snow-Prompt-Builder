@@ -4,18 +4,55 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+
 const Nav = () => {
-  const { data: session } = useSession();
-  const [providers, setProviderss] = useState(null);
+  const { data: session, status } = useSession();
+  const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
+
   useEffect(() => {
-    const setProviders = async () => {
-      const response = await getProviders();
-      setProviderss(response);
+    const fetchProviders = async () => {
+      try {
+        const response = await getProviders();
+        setProviders(response);
+      } catch (error) {
+        console.error("Error fetching providers:", error);
+        // Fallback: set a default Google provider if getProviders fails
+        setProviders({
+          google: {
+            id: "google",
+            name: "Google",
+            type: "oauth"
+          }
+        });
+      }
     };
 
-    setProviders();
-  }, []);
+    // Only fetch providers if user is not authenticated
+    if (status !== "loading" && !session) {
+      fetchProviders();
+    }
+  }, [session, status]);
+
+  // Show loading state while session is being fetched
+  if (status === "loading") {
+    return (
+      <nav className="flex-between w-full mb-16 pt-3">
+        <Link href={"/"} className="flex gap-2 flex-center">
+          <Image
+            src={"/assets/images/logo.svg"}
+            alt="logo"
+            width={30}
+            height={30}
+            className="object-contain"
+          />
+          <p className="logo_text">Snow Prompt Builder</p>
+        </Link>
+        <div className="animate-pulse bg-gray-300 rounded-full w-10 h-10"></div>
+      </nav>
+    );
+  }
+
   return (
     <nav className="flex-between w-full mb-16 pt-3">
       <Link href={"/"} className="flex gap-2 flex-center">
@@ -43,7 +80,7 @@ const Nav = () => {
             </button>
             <Link href={"/profile"}>
               <Image
-                src={session?.user?.image}
+                src={session?.user?.image || "/assets/images/logo.svg"}
                 width={37}
                 height={37}
                 alt="profile"
@@ -52,8 +89,8 @@ const Nav = () => {
             </Link>
           </div>
         ) : (
-          <>
-            {providers &&
+          <div className="flex gap-2">
+            {providers ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -61,24 +98,33 @@ const Nav = () => {
                   onClick={() => signIn(provider.id)}
                   className="black_btn"
                 >
-                  Sign In
+                  Sign In with {provider.name}
                 </button>
-              ))}
-          </>
+              ))
+            ) : (
+              // Fallback sign in button if providers fail to load
+              <button
+                type="button"
+                onClick={() => signIn("google")}
+                className="black_btn"
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         )}
       </div>
 
       {/* Mobile Navigation */}
-
       <div className="sm:hidden flex relative">
         {session?.user ? (
           <div className="flex">
             <Image
-              src={session?.user?.image}
+              src={session?.user?.image || "/assets/images/logo.svg"}
               width={37}
               height={37}
               alt="profile"
-              className="rounded-full"
+              className="rounded-full cursor-pointer"
               onClick={() => setToggleDropdown((prev) => !prev)}
             />
             {toggleDropdown && (
@@ -97,8 +143,11 @@ const Nav = () => {
                 >
                   Create Prompt
                 </Link>
-
-                <Link href={"/generate-prompt"} className="black_btn">
+                <Link 
+                  href={"/generate-prompt"} 
+                  className="dropdown_link"
+                  onClick={() => setToggleDropdown(false)}
+                >
                   Generate Prompt
                 </Link>
                 <button
@@ -107,7 +156,7 @@ const Nav = () => {
                     setToggleDropdown(false);
                     signOut();
                   }}
-                  className="mt-5 w-full black_btn"
+                  className="mt-3 w-full black_btn"
                 >
                   Sign Out
                 </button>
@@ -115,8 +164,8 @@ const Nav = () => {
             )}
           </div>
         ) : (
-          <>
-            {providers &&
+          <div className="flex">
+            {providers ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
@@ -126,8 +175,18 @@ const Nav = () => {
                 >
                   Sign In
                 </button>
-              ))}
-          </>
+              ))
+            ) : (
+              // Fallback sign in button for mobile
+              <button
+                type="button"
+                onClick={() => signIn("google")}
+                className="black_btn"
+              >
+                Sign In
+              </button>
+            )}
+          </div>
         )}
       </div>
     </nav>
