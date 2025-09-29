@@ -54,7 +54,7 @@ const Footer = () => {
             <FaTelegram size={20} />
           </Link>
           <Link
-            href="https://github.com/DimitriTedom"
+            href="https://github.com/DimitriTedom/Snow-Prompt-Builder/tree/main"
             target="_blank"
             className="text-gray-400 hover:text-[#F8F9FA] transition"
           >

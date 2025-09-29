@@ -28,12 +28,10 @@ const handler = NextAuth({
       try {
         await prisma.$connect();
         
-        //check if a user already exists
         const userExists = await prisma.user.findUnique({ 
           where: { email: profile.email } 
         });
         
-        //if not, create a new user
         if (!userExists) {
           await prisma.user.create({
             data: {
@@ -45,13 +43,19 @@ const handler = NextAuth({
         }
         return true;
       } catch (error) {
-        console.error("Error in signIn callback:", error.message);
+        console.error("Error in signIn callback:", error);
         return false;
       } finally {
         await prisma.$disconnect();
       }
     },
   },
+  pages: {
+    signIn: "/auth/signin", // Optional: custom sign-in page
+    error: "/auth/error",   // Optional: custom error page
+  },
+  // Add this for production stability
+  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
