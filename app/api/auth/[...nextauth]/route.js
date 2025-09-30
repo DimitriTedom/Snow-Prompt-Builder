@@ -50,11 +50,11 @@ const handler = NextAuth({
       }
     },
   },
-  pages: {
-    signIn: "/auth/signin", // Optional: custom sign-in page
-    error: "/auth/error",   // Optional: custom error page
-  },
-  // Add this for production stability
+  // Remove custom pages that might not exist
+  // pages: {
+  //   signIn: "/auth/signin",
+  //   error: "/auth/error",
+  // },
   secret: process.env.NEXTAUTH_SECRET,
 });
 

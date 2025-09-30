@@ -14,25 +14,20 @@ const Nav = () => {
     const fetchProviders = async () => {
       try {
         const response = await getProviders();
+        console.log("Providers fetched:", response); // Debug log
         setProviders(response);
       } catch (error) {
         console.error("Error fetching providers:", error);
-        // Fallback: set a default Google provider if getProviders fails
-        setProviders({
-          google: {
-            id: "google",
-            name: "Google",
-            type: "oauth"
-          }
-        });
+        // Set providers to null to trigger fallback button
+        setProviders(null);
       }
     };
 
-    // Only fetch providers if user is not authenticated
-    if (status !== "loading" && !session) {
+    // Always try to fetch providers when not authenticated
+    if (!session) {
       fetchProviders();
     }
-  }, [session, status]);
+  }, [session]);
 
   // Show loading state while session is being fetched
   if (status === "loading") {
@@ -90,12 +85,15 @@ const Nav = () => {
           </div>
         ) : (
           <div className="flex gap-2">
-            {providers ? (
+            {providers && Object.keys(providers).length > 0 ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
                   key={provider.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={() => {
+                    console.log("Signing in with provider:", provider.id); // Debug log
+                    signIn(provider.id);
+                  }}
                   className="black_btn"
                 >
                   Sign In with {provider.name}
@@ -105,7 +103,10 @@ const Nav = () => {
               // Fallback sign in button if providers fail to load
               <button
                 type="button"
-                onClick={() => signIn("google")}
+                onClick={() => {
+                  console.log("Using fallback sign in"); // Debug log
+                  signIn("google");
+                }}
                 className="black_btn"
               >
                 Sign In
@@ -165,12 +166,15 @@ const Nav = () => {
           </div>
         ) : (
           <div className="flex">
-            {providers ? (
+            {providers && Object.keys(providers).length > 0 ? (
               Object.values(providers).map((provider) => (
                 <button
                   type="button"
                   key={provider.name}
-                  onClick={() => signIn(provider.id)}
+                  onClick={() => {
+                    console.log("Mobile: Signing in with provider:", provider.id); // Debug log
+                    signIn(provider.id);
+                  }}
                   className="black_btn"
                 >
                   Sign In
@@ -180,7 +184,10 @@ const Nav = () => {
               // Fallback sign in button for mobile
               <button
                 type="button"
-                onClick={() => signIn("google")}
+                onClick={() => {
+                  console.log("Mobile: Using fallback sign in"); // Debug log
+                  signIn("google");
+                }}
                 className="black_btn"
               >
                 Sign In
