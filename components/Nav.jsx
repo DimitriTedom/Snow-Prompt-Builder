@@ -2,32 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { useState, useEffect } from "react";
-import { signIn, signOut, useSession, getProviders } from "next-auth/react";
+import { useState } from "react";
+import { signIn, signOut, useSession } from "next-auth/react";
 
 const Nav = () => {
   const { data: session, status } = useSession();
-  const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
 
-  useEffect(() => {
-    const fetchProviders = async () => {
-      try {
-        const response = await getProviders();
-        console.log("Providers fetched:", response); // Debug log
-        setProviders(response);
-      } catch (error) {
-        console.error("Error fetching providers:", error);
-        // Set providers to null to trigger fallback button
-        setProviders(null);
-      }
-    };
-
-    // Always try to fetch providers when not authenticated
-    if (!session) {
-      fetchProviders();
-    }
-  }, [session]);
+  // Removed providers state and useEffect since we're using direct Google sign-in
 
   // Show loading state while session is being fetched
   if (status === "loading") {
@@ -85,33 +67,17 @@ const Nav = () => {
           </div>
         ) : (
           <div className="flex gap-2">
-            {providers && Object.keys(providers).length > 0 ? (
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => {
-                    console.log("Signing in with provider:", provider.id); // Debug log
-                    signIn(provider.id);
-                  }}
-                  className="black_btn"
-                >
-                  Sign In with {provider.name}
-                </button>
-              ))
-            ) : (
-              // Fallback sign in button if providers fail to load
-              <button
-                type="button"
-                onClick={() => {
-                  console.log("Using fallback sign in"); // Debug log
-                  signIn("google");
-                }}
-                className="black_btn"
-              >
-                Sign In
-              </button>
-            )}
+            {/* Direct Google sign-in without fetching providers */}
+            <button
+              type="button"
+              onClick={() => {
+                console.log("Direct Google sign in"); // Debug log
+                signIn("google");
+              }}
+              className="black_btn"
+            >
+              Sign In with Google
+            </button>
           </div>
         )}
       </div>
@@ -166,33 +132,17 @@ const Nav = () => {
           </div>
         ) : (
           <div className="flex">
-            {providers && Object.keys(providers).length > 0 ? (
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => {
-                    console.log("Mobile: Signing in with provider:", provider.id); // Debug log
-                    signIn(provider.id);
-                  }}
-                  className="black_btn"
-                >
-                  Sign In
-                </button>
-              ))
-            ) : (
-              // Fallback sign in button for mobile
-              <button
-                type="button"
-                onClick={() => {
-                  console.log("Mobile: Using fallback sign in"); // Debug log
-                  signIn("google");
-                }}
-                className="black_btn"
-              >
-                Sign In
-              </button>
-            )}
+            {/* Direct Google sign-in for mobile */}
+            <button
+              type="button"
+              onClick={() => {
+                console.log("Mobile: Direct Google sign in"); // Debug log
+                signIn("google");
+              }}
+              className="black_btn"
+            >
+              Sign In
+            </button>
           </div>
         )}
       </div>
